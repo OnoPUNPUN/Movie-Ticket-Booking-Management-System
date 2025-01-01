@@ -21,8 +21,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -168,6 +170,9 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
+    private double x = 0;
+    private double y = 0;
+
     public void signin()
     {
        String sql = "SELECT * FROM admin WHERE username = ? and password = ?";
@@ -195,6 +200,8 @@ public class FXMLDocumentController implements Initializable {
 
                if(result.next())
                {
+                   getData.username = signIn_username.getText();
+
                    alert = new Alert(Alert.AlertType.INFORMATION);
                    alert.setTitle("Information Message");
                    alert.setHeaderText(null);
@@ -208,6 +215,18 @@ public class FXMLDocumentController implements Initializable {
 
                    Stage stage = new Stage();
                    Scene scene = new Scene(root);
+
+                   root.setOnMousePressed((MouseEvent event) ->{
+                       x = event.getSceneX();
+                       y = event.getSceneY();
+                   });
+
+                   root.setOnMouseDragged((MouseEvent event) ->{
+                       stage.setX(event.getScreenX() - x);
+                       stage.setY(event.getScreenY() - y);
+                   });
+
+                   stage.initStyle(StageStyle.TRANSPARENT);
                    stage.setScene(scene);
                    stage.show();
                } else {
