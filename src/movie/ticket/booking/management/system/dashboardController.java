@@ -29,6 +29,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -93,7 +95,7 @@ public class dashboardController implements Initializable {
     private Button addMovies_updateBtn;
 
     @FXML
-    private TableView<?> addScreening_tableView;
+    private TableView<movieData> addScreening_tableView;
 
     @FXML
     private ImageView availableMovies_ImageView;
@@ -222,16 +224,16 @@ public class dashboardController implements Initializable {
     private Button editScreening_btn;
 
     @FXML
-    private TableColumn<?, ?> editScreening_col_current;
+    private TableColumn<movieData, String> editScreening_col_current;
 
     @FXML
-    private TableColumn<?, ?> editScreening_col_duration;
+    private TableColumn<movieData, String> editScreening_col_duration;
 
     @FXML
-    private TableColumn<?, ?> editScreening_col_genre;
+    private TableColumn<movieData, String> editScreening_col_genre;
 
     @FXML
-    private TableColumn<?, ?> editScreening_col_movieTitle;
+    private TableColumn<movieData, String> editScreening_col_movieTitle;
 
     @FXML
     private ComboBox<?> editScreening_current;
@@ -276,6 +278,81 @@ public class dashboardController implements Initializable {
     private ResultSet result;
     private Statement statement;
 
+    /*EDIT SCREENIG PART*/
+    private String[] currentList ={"Showing", "End Showing"};
+    public void comboBox(){
+        List<String> listCurrent = new ArrayList<String>();
+
+        for(String data: currentList){
+            listCurrent.add(data);
+        }
+
+        ObservableList listC = FXCollections.observableList(listCurrent);
+        editScreening_current.setItems(listC);
+    }
+
+    public void updateEditScreening(){
+        String sql = "UPDATE movie SET current = '"
+                + editScreening_current.getSelectionModel()
+                + "' WHERE movieTitle = '" + editScreening_title.getText() + "'";
+
+        connect = database.connectDb();
+    }
+
+    public void selectEditScreening(){
+        movieData movD = addScreening_tableView.getSelectionModel().getSelectedItem();
+        int num = addScreening_tableView.getSelectionModel().getFocusedIndex();
+
+        if((num - 1) < - 1){
+            return;
+        }
+
+        String uri = "file:" + movD.getImage();
+        image = new Image(uri, 138, 183, false, true);
+        editScreening_ImageView.setImage(image);
+
+        editScreening_title.setText(movD.getTitle());
+    }
+
+    public ObservableList<movieData> editScreeningList(){
+       ObservableList<movieData> editSList = FXCollections.observableArrayList();
+       String sql = "SELECT * FROM movie";
+       connect = database.connectDb();
+
+       try{
+
+           prepared = connect.prepareStatement(sql);
+           result = prepared.executeQuery();
+
+           movieData movD;
+
+           while(result.next()){
+               movD = new movieData(result.getInt("id")
+                       , result.getString("movieTitle")
+                       , result.getString("genre"), result.getString("duration")
+                       , result.getString("image"), result.getDate("date")
+                       , result.getString("current"));
+
+               editSList.add(movD);
+           }
+
+       } catch (Exception e) {e.printStackTrace();}
+       return editSList;
+    }
+
+    private ObservableList<movieData> editScreeningL;
+    public void showEditScreening(){
+        editScreeningL = editScreeningList();
+
+        editScreening_col_movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        editScreening_col_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        editScreening_col_duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        editScreening_col_current.setCellValueFactory(new PropertyValueFactory<>("current"));
+
+        addScreening_tableView.setItems(editScreeningL);
+    }
+
+    /*ADD MOVIE PART*/
     public void searchAdddMovies() {
         FilteredList<movieData> filter = new FilteredList<>(ListAddMovies, e -> true);
         addMovies_search.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -521,7 +598,8 @@ public class dashboardController implements Initializable {
                 movD = new movieData(result.getInt("id")
                         , result.getString("movieTitle")
                         , result.getString("genre"), result.getString("duration")
-                        , result.getString("image"), result.getDate("date"));
+                        , result.getString("image"), result.getDate("date")
+                        , result.getString("current"));
 
                 listData.add(movD);
             }
@@ -684,6 +762,8 @@ public class dashboardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         displayUsername();
         showAddMoviesList();
+        showEditScreening();
+        comboBox();
     }
 }
 

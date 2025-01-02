@@ -350,7 +350,7 @@
                                     <Font name="Microsoft Sans Serif" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="editScreening_current" layoutX="96.0" layoutY="280.0" prefHeight="32.0" prefWidth="150.0" promptText="Choose" styleClass="combo-box" stylesheets="@daahboardDesign.css" />
+                              <ComboBox fx:id="editScreening_current" layoutX="96.0" layoutY="280.0" onAction="#comboBox" prefHeight="32.0" prefWidth="150.0" promptText="Choose" styleClass="combo-box" stylesheets="@daahboardDesign.css" />
                               <Label layoutX="36.0" layoutY="286.0" text="Current:">
                                  <font>
                                     <Font size="14.0" />
@@ -364,7 +364,7 @@
                            <children>
                               <TextField fx:id="editScreening_search" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="219.0" promptText="Search" styleClass="search" stylesheets="@daahboardDesign.css" />
                               <FontAwesomeIcon fill="#868686" glyphName="SEARCH" layoutX="21.0" layoutY="36.0" size="1.5em" text="" />
-                              <TableView fx:id="addScreening_tableView" layoutX="6.0" layoutY="59.0" prefHeight="463.0" prefWidth="574.0">
+                              <TableView fx:id="addScreening_tableView" layoutX="6.0" layoutY="59.0" onMouseClicked="#selectEditScreening" prefHeight="463.0" prefWidth="574.0">
                                 <columns>
                                   <TableColumn fx:id="editScreening_col_movieTitle" prefWidth="177.0" text="Movie TItle" />
                                   <TableColumn fx:id="editScreening_col_genre" prefWidth="121.0" text="Genre" />
