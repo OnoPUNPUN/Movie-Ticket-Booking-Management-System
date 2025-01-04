@@ -356,8 +356,8 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="editScreening_delete" layoutX="155.0" layoutY="358.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" styleClass="delete-btn" stylesheets="@daahboardDesign.css" text="Delete" />
-                              <Button fx:id="editScreening_update" layoutX="16.0" layoutY="358.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="91.0" styleClass="update-btn" stylesheets="@daahboardDesign.css" text="Update" />
+                              <Button fx:id="editScreening_delete" layoutX="155.0" layoutY="358.0" mnemonicParsing="false" onAction="#clearEditScreening" prefHeight="42.0" prefWidth="91.0" styleClass="clear-btn" stylesheets="@daahboardDesign.css" text="Clear" />
+                              <Button fx:id="editScreening_update" layoutX="16.0" layoutY="358.0" mnemonicParsing="false" onAction="#updateEditScreening" prefHeight="42.0" prefWidth="91.0" styleClass="update-btn" stylesheets="@daahboardDesign.css" text="Update" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="301.0" layoutY="14.0" prefHeight="529.0" prefWidth="587.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">

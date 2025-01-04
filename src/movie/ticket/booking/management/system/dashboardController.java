@@ -280,30 +280,71 @@ public class dashboardController implements Initializable {
 
     /*EDIT SCREENIG PART*/
     private String[] currentList ={"Showing", "End Showing"};
-    public void comboBox(){
-        List<String> listCurrent = new ArrayList<String>();
 
-        for(String data: currentList){
+    public void comboBox(){
+        List<String> listCurrent = new ArrayList<>();
+
+        for(String data : currentList){
             listCurrent.add(data);
         }
 
-        ObservableList listC = FXCollections.observableList(listCurrent);
+        ObservableList listC = FXCollections.observableArrayList(listCurrent);
         editScreening_current.setItems(listC);
     }
 
     public void updateEditScreening(){
         String sql = "UPDATE movie SET current = '"
-                + editScreening_current.getSelectionModel()
+                + editScreening_current.getSelectionModel().getSelectedItem()
                 + "' WHERE movieTitle = '" + editScreening_title.getText() + "'";
 
+
         connect = database.connectDb();
+
+        try{
+
+            statement = connect.createStatement();
+
+            Alert alert;
+
+            if(editScreening_title.getText().isEmpty()
+                    || editScreening_ImageView.getImage() == null
+                    || editScreening_current.getSelectionModel().isEmpty()) {
+
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Please select the movie first");
+                alert.showAndWait();
+            } else{
+                statement.executeUpdate(sql);
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Successfully updated");
+                alert.showAndWait();
+
+                showEditScreening();
+                clearEditScreening();
+            }
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+
+
+    public void clearEditScreening(){
+        editScreening_title.setText("");
+        editScreening_ImageView.setImage(null);
+//        editScreening_current.setSelectionModel(null);
+
+
     }
 
     public void selectEditScreening(){
         movieData movD = addScreening_tableView.getSelectionModel().getSelectedItem();
         int num = addScreening_tableView.getSelectionModel().getFocusedIndex();
 
-        if((num - 1) < - 1){
+        if((num - 1) < -1){
             return;
         }
 
