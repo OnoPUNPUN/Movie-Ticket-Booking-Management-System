@@ -208,7 +208,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="availableMovies_form" prefHeight="556.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableMovies_form" prefHeight="556.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="210.0" prefWidth="877.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
                            <children>
@@ -219,7 +219,7 @@
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="availableMovies_movieTitle" layoutX="105.0" layoutY="21.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Title:">
+                                    <Label fx:id="availableMovies_movieTitle" layoutX="105.0" layoutY="21.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
@@ -229,7 +229,7 @@
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="availableMovies_genre" layoutX="105.0" layoutY="62.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Title:">
+                                    <Label fx:id="availableMovies_genre" layoutX="105.0" layoutY="62.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
@@ -239,15 +239,15 @@
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="availableMovies_date" layoutX="104.0" layoutY="104.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Title:">
+                                    <Label fx:id="availableMovies_date" layoutX="104.0" layoutY="104.0" prefHeight="24.0" prefWidth="152.0" styleClass="label-info" stylesheets="@daahboardDesign.css">
                                        <font>
                                           <Font name="Microsoft Sans Serif" size="14.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="availableMovies_selectMovie" layoutX="94.0" layoutY="160.0" mnemonicParsing="false" styleClass="insert-btn" stylesheets="@daahboardDesign.css" text="Select Button" />
+                                    <Button fx:id="availableMovies_selectMovie" layoutX="94.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectMovie" styleClass="insert-btn" stylesheets="@daahboardDesign.css" text="Select Button" />
                                  </children>
                               </AnchorPane>
-                              <TableView fx:id="availableMovies_tableView" layoutX="279.0" layoutY="2.0" prefHeight="203.0" prefWidth="578.0">
+                              <TableView fx:id="availableMovies_tableView" layoutX="279.0" layoutY="2.0" onMouseClicked="#selectAvailableMovies" prefHeight="203.0" prefWidth="578.0">
                                 <columns>
                                   <TableColumn fx:id="availableMovies_col_movieTitle" prefWidth="187.0" text="Movie Title" />
                                   <TableColumn fx:id="availableMovies_col_genre" prefWidth="184.0" text="Genre" />
@@ -297,13 +297,13 @@
                                     <Font name="Microsoft Sans Serif" size="17.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="335.0" layoutY="129.0" text="Special Class:">
+                              <Label layoutX="335.0" layoutY="129.0" text="Normal Class:">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="17.0" />
                                  </font>
                               </Label>
-                              <Spinner fx:id="availableMovies_specialClass_quantity" layoutX="461.0" layoutY="90.0" prefHeight="25.0" prefWidth="78.0" />
-                              <Spinner fx:id="availableMovies_normalClass" layoutX="461.0" layoutY="127.0" prefHeight="25.0" prefWidth="78.0" />
+                              <Spinner fx:id="availableMovies_specialClass_quantity" layoutX="461.0" layoutY="90.0" onMouseClicked="#getSpinnerValue" prefHeight="25.0" prefWidth="78.0" />
+                              <Spinner fx:id="availableMovies_normalClass" layoutX="461.0" layoutY="127.0" onMouseClicked="#getSpinnerValue" prefHeight="25.0" prefWidth="78.0" />
                               <Label fx:id="availableMovies_specialClass_price" layoutX="609.0" layoutY="93.0" text="\$0.0">
                                  <font>
                                     <Font name="Microsoft Sans Serif" size="16.0" />
@@ -324,14 +324,14 @@
                                     <Font name="Microsoft Sans Serif" size="20.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="availableMovies_buyBtn" layoutX="683.0" layoutY="236.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" styleClass="buy-btn" stylesheets="@daahboardDesign.css" text="Buy" />
+                              <Button fx:id="availableMovies_buyBtn" layoutX="683.0" layoutY="236.0" mnemonicParsing="false" onAction="#buy" prefHeight="39.0" prefWidth="85.0" styleClass="buy-btn" stylesheets="@daahboardDesign.css" text="Buy" />
                               <Button fx:id="availableMovies_receiptBtn" layoutX="583.0" layoutY="236.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" styleClass="receipt-btn" stylesheets="@daahboardDesign.css" text="Receipt" />
-                              <Button fx:id="availableMovies_clearBtn" layoutX="335.0" layoutY="236.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@daahboardDesign.css" text="Clear" />
+                              <Button fx:id="availableMovies_clearBtn" layoutX="335.0" layoutY="236.0" mnemonicParsing="false" onAction="#clearPurchaseTicketInfo" prefHeight="39.0" prefWidth="85.0" styleClass="clear-btn" stylesheets="@daahboardDesign.css" text="Clear" />
                            </children>
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="editScreening_form" prefHeight="556.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="editScreening_form" prefHeight="556.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="12.0" layoutY="14.0" prefHeight="529.0" prefWidth="260.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
                            <children>
@@ -362,7 +362,7 @@
                         </AnchorPane>
                         <AnchorPane layoutX="301.0" layoutY="14.0" prefHeight="529.0" prefWidth="587.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
                            <children>
-                              <TextField fx:id="editScreening_search" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="219.0" promptText="Search" styleClass="search" stylesheets="@daahboardDesign.css" />
+                              <TextField fx:id="editScreening_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchEditScreening" prefHeight="30.0" prefWidth="219.0" promptText="Search" styleClass="search" stylesheets="@daahboardDesign.css" />
                               <FontAwesomeIcon fill="#868686" glyphName="SEARCH" layoutX="21.0" layoutY="36.0" size="1.5em" text="" />
                               <TableView fx:id="addScreening_tableView" layoutX="6.0" layoutY="59.0" onMouseClicked="#selectEditScreening" prefHeight="463.0" prefWidth="574.0">
                                 <columns>
