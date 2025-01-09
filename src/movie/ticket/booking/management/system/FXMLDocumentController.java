@@ -103,7 +103,7 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    public void signup()
+    /*public void signup()
     {
         String sql = "INSERT INTO admin (email, username, password) VALUES (?,?,?)";
         String sql1 = "SELECT username FROM admin";
@@ -168,7 +168,63 @@ public class FXMLDocumentController implements Initializable {
         {
             e.printStackTrace();
         }
+    }*/
+    public void signup() {
+        String sql = "INSERT INTO admin (email, username, password) VALUES (?,?,?)";
+        String sql1 = "SELECT username FROM admin WHERE username = ?";
+        connect = database.connectDb();
+
+        try {
+            Alert alert;
+
+            if (signUp_email.getText().isEmpty() || signUp_username.getText().isEmpty() || signUp_password.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all the fields");
+                alert.showAndWait();
+            } else if (signUp_password.getText().length() < 8) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Password must be at least 8 characters");
+                alert.showAndWait();
+            } else {
+                if (validEmail()) {
+                    prepare = connect.prepareStatement(sql1);
+                    prepare.setString(1, signUp_username.getText());
+                    result = prepare.executeQuery();
+
+                    if (result.next()) {
+                        alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText(signUp_username.getText() + " is already registered");
+                        alert.showAndWait();
+                    } else {
+                        prepare = connect.prepareStatement(sql);
+                        prepare.setString(1, signUp_email.getText());
+                        prepare.setString(2, signUp_username.getText());
+                        prepare.setString(3, signUp_password.getText());
+                        prepare.execute();
+
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Information Message");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Successfully created a new account");
+                        alert.showAndWait();
+
+                        signUp_email.setText("");
+                        signUp_username.setText("");
+                        signUp_password.setText("");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     private double x = 0;
     private double y = 0;
@@ -277,7 +333,8 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        signIn_form.setVisible(true);
+        signUp_form.setVisible(false);
     }    
     
 }

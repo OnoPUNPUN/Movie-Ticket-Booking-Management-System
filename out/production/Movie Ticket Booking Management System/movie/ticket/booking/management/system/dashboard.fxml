@@ -78,11 +78,6 @@
                         <FontAwesomeIcon fill="WHITE" glyphName="SERVER" size="1.5em" />
                      </graphic>
                   </Button>
-                  <Button fx:id="customer_btn" layoutX="14.0" layoutY="358.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="35.0" prefWidth="175.0" styleClass="nav-btn" stylesheets="@daahboardDesign.css" text="Customers">
-                     <graphic>
-                        <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="1.5em" />
-                     </graphic>
-                  </Button>
                   <Button fx:id="singout" layoutX="14.0" layoutY="511.0" mnemonicParsing="false" onAction="#logout" styleClass="signout" stylesheets="@daahboardDesign.css">
                      <graphic>
                         <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.8em" />
@@ -99,7 +94,7 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane fx:id="dashboard_form" prefHeight="177.0" prefWidth="873.0" styleClass="bg-white" stylesheets="@daahboardDesign.css" visible="false">
+                  <AnchorPane fx:id="dashboard_form" prefHeight="177.0" prefWidth="873.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="9.0" prefHeight="160.0" prefWidth="252.0" stylesheets="@daahboardDesign.css">
                            <children>
@@ -208,7 +203,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="availableMovies_form" prefHeight="556.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="availableMovies_form" prefHeight="556.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="210.0" prefWidth="877.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
                            <children>
@@ -370,65 +365,6 @@
                                   <TableColumn fx:id="editScreening_col_genre" prefWidth="121.0" text="Genre" />
                                     <TableColumn fx:id="editScreening_col_duration" prefWidth="113.0" text="Duration" />
                                     <TableColumn fx:id="editScreening_col_current" prefWidth="162.0" text="Current" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="customers_form" prefHeight="556.0" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="17.0" prefHeight="523.0" prefWidth="285.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
-                           <children>
-                              <AnchorPane layoutX="11.0" layoutY="14.0" prefHeight="229.0" prefWidth="265.0" styleClass="card-customer" stylesheets="@daahboardDesign.css">
-                                 <children>
-                                    <Label layoutX="9.0" layoutY="21.0" text="Movie Ticket:" AnchorPane.leftAnchor="9.0">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="customer_ticketNumber" layoutX="91.0" layoutY="14.0" prefHeight="32.0" prefWidth="167.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Ticket" />
-                                    <Label layoutX="20.0" layoutY="60.0" text="Movie Title:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="customer_movieTitle" layoutX="91.0" layoutY="63.0" prefHeight="32.0" prefWidth="167.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Ticket" AnchorPane.topAnchor="50.0" />
-                                    <Label layoutX="48.0" layoutY="96.0" text="Genre:">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="customer_genre" layoutX="91.0" layoutY="89.0" prefHeight="32.0" prefWidth="167.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Ticket" />
-                                    <Label layoutX="3.0" layoutY="134.0" text="Date Checked:">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="customer_date" layoutX="93.0" layoutY="127.0" prefHeight="32.0" prefWidth="167.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Ticket" />
-                                    <Label layoutX="5.0" layoutY="173.0" text="Time Checked:">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="customer_time" layoutX="94.0" layoutY="166.0" prefHeight="32.0" prefWidth="167.0" styleClass="label-info" stylesheets="@daahboardDesign.css" text="Movie Ticket" />
-                                 </children>
-                              </AnchorPane>
-                              <Button fx:id="customer_clearBtn" layoutX="14.0" layoutY="317.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="96.0" styleClass="clear-btn" stylesheets="@daahboardDesign.css" text="Clear" />
-                              <Button fx:id="customer_deleteBtn" layoutX="175.0" layoutY="317.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="96.0" styleClass="delete-btn" stylesheets="@daahboardDesign.css" text="Delete" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="314.0" layoutY="17.0" prefHeight="523.0" prefWidth="572.0" styleClass="bg-white" stylesheets="@daahboardDesign.css">
-                           <children>
-                              <TextField fx:id="customer_search" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="212.0" promptText="Search" styleClass="search" stylesheets="@daahboardDesign.css" />
-                              <FontAwesomeIcon fill="#868686" glyphName="SEARCH" layoutX="18.0" layoutY="33.0" size="1.5em" />
-                              <TableView layoutX="14.0" layoutY="51.0" prefHeight="464.0" prefWidth="549.0">
-                                <columns>
-                                  <TableColumn fx:id="customer_col_ticketNumber" prefWidth="111.0" text="Ticket Number" />
-                                  <TableColumn fx:id="customer_col_movieTitle" prefWidth="110.0" text="Movie Title" />
-                                    <TableColumn fx:id="customer_col_genre" prefWidth="99.0" text="Genre" />
-                                    <TableColumn fx:id="customer_col_date" prefWidth="110.0" text="Date Checked" />
-                                    <TableColumn fx:id="customer_col_time" prefWidth="116.0" text="Time Checked" />
                                 </columns>
                               </TableView>
                            </children>

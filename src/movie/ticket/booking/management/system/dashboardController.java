@@ -155,51 +155,6 @@ public class dashboardController implements Initializable {
     private Label availableMovies_total;
 
     @FXML
-    private Button customer_btn;
-
-    @FXML
-    private Button customer_clearBtn;
-
-    @FXML
-    private TableColumn<?, ?> customer_col_date;
-
-    @FXML
-    private TableColumn<?, ?> customer_col_genre;
-
-    @FXML
-    private TableColumn<?, ?> customer_col_movieTitle;
-
-    @FXML
-    private TableColumn<?, ?> customer_col_ticketNumber;
-
-    @FXML
-    private TableColumn<?, ?> customer_col_time;
-
-    @FXML
-    private Label customer_date;
-
-    @FXML
-    private Button customer_deleteBtn;
-
-    @FXML
-    private Label customer_genre;
-
-    @FXML
-    private Label customer_movieTitle;
-
-    @FXML
-    private TextField customer_search;
-
-    @FXML
-    private Label customer_ticketNumber;
-
-    @FXML
-    private Label customer_time;
-
-    @FXML
-    private AnchorPane customers_form;
-
-    @FXML
     private Label dashboard_availableMovies;
 
     @FXML
@@ -283,9 +238,90 @@ public class dashboardController implements Initializable {
     private float total = 0;
     private int qty1 = 0;
     private int qty2 = 0;
+    private int soldTicket;
+    private double totalIncome;
+    private int totalMovies;
+
+    public void totalAvailableMovies(){
+        String sql = "SELECT COUNT(id) FROM movie WHERE current = 'Showing'";
+
+        connect = database.connectDb();
+
+        try {
+            prepared = connect.prepareStatement(sql);
+            result = prepared.executeQuery();
+
+            if(result.next()){
+                totalMovies = result.getInt("count(id)");
+            }
+
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    public void displayTotalAvailableMovies(){
+        totalAvailableMovies();
+        dashboard_availableMovies.setText(String.valueOf(totalMovies));
+    }
+
+    public void totalIncomeToday(){
+
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+
+        String sql = "SELECT SUM(total) FROM customer WHERE date = '"
+                + String.valueOf(sqlDate) + "'";
+
+        connect = database.connectDb();
+
+        try {
+
+            prepared = connect.prepareStatement(sql);
+            result = prepared.executeQuery();
+
+            if(result.next()){
+                totalIncome = result.getDouble("SUM(total)");
+            }
+
+
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    public void displayTotalIncomeToady(){
+        totalIncomeToday();
+        dashboard_totalEarnToday.setText(String.valueOf(totalIncome));
+    }
+
+    public void countTicket(){
+
+        String sql = "SELECT count(id) FROM customer";
+
+        connect = database.connectDb();
+
+        try{
+
+            prepared = connect.prepareStatement(sql);
+            result = prepared.executeQuery();
+
+            if(result.next()){
+                soldTicket = result.getInt("count(id)");
+            }
+
+        } catch (Exception e){e.printStackTrace();}
+    }
+
+    public void displayTotalSoldTicket(){
+        countTicket();
+        dashboard_totalSoldTicket.setText(String.valueOf(soldTicket));
+    }
+    // Printing receipt
+    public void receipt(){
+        // Canceled :_)
+    }
 
 
     // CUSTOMER INFO
+    private int num;
+    private int qty;
     public void buy(){
         String sql = "INSERT INTO customer (type,total,date) VALUES (?,?,?)";
         connect = database.connectDb();
@@ -346,12 +382,13 @@ public class dashboardController implements Initializable {
                     num = result.getInt("id");
                 }
 
-                String sql2 = "INSERT INTO customer_info (customer_id,type,total) VALUES (?,?,?)";
+                String sql2 = "INSERT INTO customer_info (customer_id,type,total,movieTitle) VALUES (?,?,?,?)";
 
                 prepared = connect.prepareStatement(sql2);
                 prepared.setString(1, String.valueOf(num));
                 prepared.setString(2, type);
                 prepared.setString(3, String.valueOf(total));
+                prepared.setString(4, availableMovies_title.getText());
                 prepared.execute();
 
                 // To clear
@@ -725,7 +762,7 @@ public class dashboardController implements Initializable {
 
 
                     String sql =
-                            "INSERT INTO movie (id,movieTitle, genre, duration, image, date) VALUES (?,?,?,?,?,?)";
+                            "INSERT INTO movie (id,movieTitle, genre, duration, image, date, current) VALUES (?,?,?,?,?,?,?)";
                     String uri = getData.path;
                     uri = uri.replace("\\", "\\\\");
 
@@ -739,6 +776,7 @@ public class dashboardController implements Initializable {
                     prepared.setString(4, addMovies_duration.getText());
                     prepared.setString(5, uri);
                     prepared.setString(6, String.valueOf(addMovies_date.getValue()));
+                    prepared.setString(7, "Showing");
 
                     prepared.execute();
                     alert = new Alert(Alert.AlertType.INFORMATION);
@@ -952,13 +990,15 @@ public class dashboardController implements Initializable {
             addMovies_form.setVisible(false);
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(false);
-            customers_form.setVisible(false);
 
             dashboard_btn.setStyle("-fx-background-color: #ae2d3c;");
             addMovies_btn.setStyle("-fx-background-color: transparent;");
             availableMovies_btn.setStyle("-fx-background-color: transparent;");
             editScreening_btn.setStyle("-fx-background-color: transparent;");
-            customer_btn.setStyle("-fx-background-color: transparent;");
+
+            displayTotalSoldTicket();
+            displayTotalIncomeToady();
+            displayTotalAvailableMovies();
 
         } else if(event.getSource() == addMovies_btn) {
 
@@ -966,13 +1006,11 @@ public class dashboardController implements Initializable {
             addMovies_form.setVisible(true);
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(false);
-            customers_form.setVisible(false);
 
             addMovies_btn.setStyle("-fx-background-color: #ae2d3c;");
             dashboard_btn.setStyle("-fx-background-color: transparent;");
             availableMovies_btn.setStyle("-fx-background-color: transparent;");
             editScreening_btn.setStyle("-fx-background-color: transparent;");
-            customer_btn.setStyle("-fx-background-color: transparent;");
 
             showAddMoviesList();
 
@@ -982,13 +1020,11 @@ public class dashboardController implements Initializable {
             addMovies_form.setVisible(false);
             availableMovies_form.setVisible(true);
             editScreening_form.setVisible(false);
-            customers_form.setVisible(false);
 
             availableMovies_btn.setStyle("-fx-background-color: #ae2d3c;");
             dashboard_btn.setStyle("-fx-background-color: transparent;");
             addMovies_btn.setStyle("-fx-background-color: transparent;");
             editScreening_btn.setStyle("-fx-background-color: transparent;");
-            customer_btn.setStyle("-fx-background-color: transparent;");
 
             showAvailableMovies();
 
@@ -998,28 +1034,12 @@ public class dashboardController implements Initializable {
             addMovies_form.setVisible(false);
             availableMovies_form.setVisible(false);
             editScreening_form.setVisible(true);
-            customers_form.setVisible(false);
 
             editScreening_btn.setStyle("-fx-background-color: #ae2d3c;");
             dashboard_btn.setStyle("-fx-background-color: transparent;");
             addMovies_btn.setStyle("-fx-background-color: transparent;");
             availableMovies_btn.setStyle("-fx-background-color: transparent;");
-            customer_btn.setStyle("-fx-background-color: transparent;");
             showEditScreening();
-
-        } else if (event.getSource() == customer_btn) {
-
-            dashboard_form.setVisible(false);
-            addMovies_form.setVisible(false);
-            availableMovies_form.setVisible(false);
-            editScreening_form.setVisible(false);
-            customers_form.setVisible(true);
-
-            customer_btn.setStyle("-fx-background-color: #ae2d3c;");
-            dashboard_btn.setStyle("-fx-background-color: transparent;");
-            addMovies_btn.setStyle("-fx-background-color: transparent;");
-            availableMovies_btn.setStyle("-fx-background-color: transparent;");
-            editScreening_btn.setStyle("-fx-background-color: transparent;");
 
         }
     }
@@ -1048,6 +1068,10 @@ public class dashboardController implements Initializable {
         showAvailableMovies();
         // To use the spinner
         showSpinnerValue();
+
+        displayTotalSoldTicket();
+        displayTotalIncomeToady();
+        displayTotalAvailableMovies();
     }
 }
 
